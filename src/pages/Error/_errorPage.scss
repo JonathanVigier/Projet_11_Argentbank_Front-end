@@ -1,0 +1,18 @@
+.body.error-page {
+    align-items: center;
+    justify-content: center;
+}
+
+.error-wrapper {
+    display: grid;
+    align-items: center;
+    width: 750px;
+    height: 250px;
+    background-color: lemonchiffon;
+    border-radius: 15px;
+}
+
+.error-number {
+    color: red;
+    font-weight: bold;
+}
