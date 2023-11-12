@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { editUsername } from "../../redux/Slicers/userSlice.js";
 
 const UserInfos = () => {
@@ -7,8 +7,11 @@ const UserInfos = () => {
   const [userName, setUserName] = useState("");
 
   const dispatch = useDispatch();
-  const { firstName, lastName } = useSelector((state) => state.user.user);
-  const token = useSelector((state) => state.auth.token);
+  const token = sessionStorage.getItem("user_tkn");
+  const user = {
+    firstName: sessionStorage ? sessionStorage.getItem("user_firstName") : null,
+    lastName: sessionStorage ? sessionStorage.getItem("user_lastName") : null,
+  };
 
   const toggleEditModal = () => {
     setShowModal(!showModal);
@@ -20,9 +23,8 @@ const UserInfos = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let editedUsername = { userName };
-    console.log(JSON.stringify(editedUsername));
-    dispatch(editUsername(token, editedUsername));
+    let data = { token: token, userName: userName };
+    dispatch(editUsername(data));
     setUserName("");
     toggleEditModal();
   };
@@ -30,7 +32,7 @@ const UserInfos = () => {
   return (
     <div className="header">
       <h1>
-        Welcome back <br /> {firstName} {lastName} !
+        Welcome back <br /> {user.firstName} {user.lastName} !
       </h1>
       <button className="edit-button" onClick={toggleEditModal}>
         Edit Name
@@ -48,8 +50,8 @@ const UserInfos = () => {
                 className="w-6 h-6"
               >
                 <path
-                  strokeLineCap="round"
-                  strokeLineJoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M6 18L18 6M6 6l12 12"
                 />
               </svg>
