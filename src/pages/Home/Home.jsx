@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import NavigationBar from "../../containers/NavigationBar";
-import BannerHero from "../../containers/BannerHero";
-import Footer from "../../containers/Footer";
-import getFeatureData from "../../services/FeatureData";
-import Feature from "../../components/Feature";
+import BannerHero from "../../containers/BannerHero/BannerHero";
+import NavigationBar from "../../containers/NavigationBar/NavigationBar";
+import getFeatureData from "../../services/FeatureData/featureData";
+import Feature from "../../components/Feature/Feature";
 
 const Home = () => {
   const [features, setFeatures] = useState({});
@@ -22,7 +21,7 @@ const Home = () => {
   };
 
   return (
-    <div className="body">
+    <>
       <NavigationBar />
       <main>
         <BannerHero />
@@ -38,8 +37,7 @@ const Home = () => {
             ))}
         </section>
       </main>
-      <Footer />
-    </div>
+    </>
   );
 };
 
