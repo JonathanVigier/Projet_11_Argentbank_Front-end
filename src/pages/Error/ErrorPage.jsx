@@ -1,21 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import useCountdown from "../../utils/Redirection/redirection";
 
 const ErrorPage = () => {
-  const [number, setNumber] = useState(5);
+  const navigate = useNavigate();
 
-  const decreaseCounter = () => {
-    if (number > 1) {
-      setNumber(number - 1);
-    } else {
-      window.document.location.href = "http://localhost:3000/";
-    }
+  const onZero = () => {
+    navigate("/");
   };
 
-  useEffect(() => {
-    setInterval(() => {
-      decreaseCounter();
-    }, 1000);
-  }, [number]);
+  const number = useCountdown(5, onZero);
 
   return (
     <div className="body error-page">
