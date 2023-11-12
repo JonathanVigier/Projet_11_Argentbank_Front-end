@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { loginUser, rememberMe } from "../../redux/Slicers/authSlice";
 import { Validation } from "../../utils/Validator/validator";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
 
 const Form = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [isRemembered, setIsRemembered] = useState(false);
+
+  const { loading } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleInput = (input, value) => {
     if (input === "username") {
@@ -27,12 +28,15 @@ const Form = () => {
       email,
       password,
     };
-    dispatch(loginUser(userCredentials));
-    navigate("/profile");
+    dispatch(loginUser(userCredentials)).then(() => {
+      if (isRemembered) {
+        dispatch(rememberMe());
+      }
+    });
   };
 
   const handleRememberMe = () => {
-    dispatch(rememberMe());
+    setIsRemembered(!isRemembered);
   };
 
   return (
@@ -56,7 +60,7 @@ const Form = () => {
           id="password"
           name="password"
           required
-          onBlur={(e) => handleInput(e.target.name, e.target.value)}
+          onChange={(e) => handleInput(e.target.name, e.target.value)}
           autoComplete="false"
         />
       </div>
@@ -65,7 +69,7 @@ const Form = () => {
         <label htmlFor="remember-me">Remember me</label>
       </div>
       <button type="submit" className="sign-in-button">
-        Sign In
+        {loading ? "Sending..." : "Sign In"}
       </button>
     </form>
   );
