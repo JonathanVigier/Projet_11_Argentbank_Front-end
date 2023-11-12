@@ -1,42 +1,37 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { fetchUserData } from "../../redux/Slicers/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import NavigationBar from "../../containers/NavigationBar/NavigationBar";
-import Footer from "../../containers/Footer/Footer";
 import UserInfos from "../../components/UserInfos/UserInfos";
 import Accounts from "../../containers/Accounts/Accounts";
 import Loader from "../../components/Loader/Loader";
 
 const User = () => {
   const dispatch = useDispatch();
-  const { loading, token, isLoginSuccess } = useSelector((state) => state.auth);
+  const { loading } = useSelector((state) => state.user);
 
-  console.log(`le token est: ${token}`);
-  console.log(`l'utilisateur est il connecté ?: ${isLoginSuccess}`);
+  const userToken = sessionStorage ? sessionStorage.getItem("user_tkn") : null;
 
-  function isUserLogged() {
-    if (isLoginSuccess) {
-      dispatch(fetchUserData(token));
-    }
-  }
+  const fetchData = useCallback(() => {
+    dispatch(fetchUserData(userToken));
+  }, [dispatch, userToken]);
 
   useEffect(() => {
-    isUserLogged();
-  }, [isLoginSuccess]);
+    fetchData();
+  }, [fetchData]);
 
   if (loading) {
     return <Loader />;
   }
 
   return (
-    <div className="body">
+    <>
       <NavigationBar />
       <main className="main bg-dark">
         <UserInfos />
         <Accounts />
       </main>
-      <Footer />
-    </div>
+    </>
   );
 };
 
