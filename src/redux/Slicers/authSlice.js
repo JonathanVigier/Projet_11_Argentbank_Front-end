@@ -6,7 +6,6 @@ const initialState = {
   loading: false,
   error: null,
   isRemembered: false,
-  isLoginSuccess: false,
 };
 
 export const loginUser = createAsyncThunk(
@@ -23,11 +22,9 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     rememberMe: (state) => {
-      state.isRemembered = !state.isRemembered;
-      // Stocker le username et le token dans le local storage
-      // localStorage.setItem("tkn", state.auth.token);
+      window.localStorage.setItem("tkn", state.token);
     },
-    resetToken: (state) => {
+    resetToken: () => {
       return initialState;
     },
   },
@@ -41,17 +38,12 @@ export const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
         state.token = action.payload;
-        state.isLoginSuccess = true;
         state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.token = null;
-        if (action.error.message === "Request failed with status code 401") {
-          state.error = "Accès refusé ! Identifiants invalides";
-        } else {
-          state.error = action.error.message;
-        }
+        state.error = action.error.message;
       });
   },
 });
