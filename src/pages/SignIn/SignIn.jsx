@@ -1,11 +1,10 @@
 import React from "react";
-import NavigationBar from "../../containers/NavigationBar/NavigationBar";
-import Footer from "../../containers/Footer/Footer";
 import Form from "../../components/Form/Form";
+import NavigationBar from "../../containers/NavigationBar/NavigationBar";
 
 const SignIn = () => {
   return (
-    <div className="body">
+    <>
       <NavigationBar />
       <main className="main bg-dark">
         <section className="sign-in-content">
@@ -14,8 +13,7 @@ const SignIn = () => {
           <Form />
         </section>
       </main>
-      <Footer />
-    </div>
+    </>
   );
 };
 
