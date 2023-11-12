@@ -1,6 +1,6 @@
 import React from "react";
-import Logo from "../../components/Logo";
-import Button from "../../components/SignInButton";
+import Logo from "../../components/Logo/Logo";
+import Button from "../../components/SignInButton/SignInButton";
 
 const NavigationBar = () => {
   return (
