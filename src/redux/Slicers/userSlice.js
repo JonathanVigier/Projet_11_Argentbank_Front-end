@@ -20,8 +20,8 @@ export const fetchUserData = createAsyncThunk(
 
 export const editUsername = createAsyncThunk(
   "user/editUsername",
-  async (token, editedUsername) => {
-    const response = await editUserProfile(token, editedUsername);
+  async (data) => {
+    const response = await editUserProfile(data);
     return response;
   }
 );
@@ -29,7 +29,7 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    resetUser: (state) => {
+    resetUser: () => {
       return initialState;
     },
   },
@@ -37,15 +37,24 @@ export const userSlice = createSlice({
     builder
       .addCase(fetchUserData.pending, (state) => {
         state.loading = true;
-        state.user = {};
-        state.error = null;
       })
       .addCase(fetchUserData.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
-        state.error = null;
       })
       .addCase(fetchUserData.rejected, (state, action) => {
+        state.loading = false;
+        state.user = initialState;
+        state.error = action.error.message;
+      })
+      .addCase(editUsername.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(editUsername.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(editUsername.rejected, (state, action) => {
         state.loading = false;
         state.user = initialState;
         state.error = action.error.message;
