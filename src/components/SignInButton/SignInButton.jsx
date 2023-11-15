@@ -8,7 +8,8 @@ import toast from "react-hot-toast";
 const Button = () => {
   const dispatch = useDispatch();
 
-  const isUserLogged = sessionStorage.getItem("user_tkn");
+  const isUserLogged =
+    sessionStorage.getItem("user_tkn") ?? localStorage.getItem("tkn");
 
   const userName = sessionStorage
     ? sessionStorage.getItem("user_firstName")
