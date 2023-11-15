@@ -7,7 +7,8 @@ const UserInfos = () => {
   const [userName, setUserName] = useState("");
 
   const dispatch = useDispatch();
-  const token = sessionStorage.getItem("user_tkn");
+  const token =
+    sessionStorage.getItem("user_tkn") ?? localStorage.getItem("tkn");
   const user = {
     firstName: sessionStorage ? sessionStorage.getItem("user_firstName") : null,
     lastName: sessionStorage ? sessionStorage.getItem("user_lastName") : null,
