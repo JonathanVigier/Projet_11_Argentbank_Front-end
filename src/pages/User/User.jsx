@@ -10,7 +10,8 @@ const User = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.user);
 
-  const userToken = sessionStorage ? sessionStorage.getItem("user_tkn") : null;
+  const userToken =
+    sessionStorage.getItem("user_tkn") ?? localStorage.getItem("tkn");
 
   const fetchData = useCallback(() => {
     dispatch(fetchUserData(userToken));
