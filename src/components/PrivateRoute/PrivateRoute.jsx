@@ -3,10 +3,10 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
 const PrivateRoute = ({ children }) => {
-  const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
-  const authUser = sessionStorage ? sessionStorage.getItem("user_tkn") : token;
+  const authUser =
+    sessionStorage.getItem("user_tkn") ?? localStorage.getItem("tkn");
 
   useEffect(() => {
     if (!authUser) {
