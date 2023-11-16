@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { editUsername } from "../../redux/Slicers/userSlice.js";
 
 const UserInfos = () => {
@@ -7,11 +7,10 @@ const UserInfos = () => {
   const [userName, setUserName] = useState("");
 
   const dispatch = useDispatch();
-  const token =
-    sessionStorage.getItem("user_tkn") ?? localStorage.getItem("tkn");
+  const token = useSelector((state) => state.auth.token);
   const user = {
-    firstName: sessionStorage ? sessionStorage.getItem("user_firstName") : null,
-    lastName: sessionStorage ? sessionStorage.getItem("user_lastName") : null,
+    firstName: useSelector((state) => state.user.user.firstName),
+    lastName: useSelector((state) => state.user.user.lastName),
   };
 
   const toggleEditModal = () => {

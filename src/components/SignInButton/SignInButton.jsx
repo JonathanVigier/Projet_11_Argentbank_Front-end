@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { resetToken } from "../../redux/Slicers/authSlice";
 import { resetUser } from "../../redux/Slicers/userSlice";
@@ -8,12 +8,9 @@ import toast from "react-hot-toast";
 const Button = () => {
   const dispatch = useDispatch();
 
-  const isUserLogged =
-    sessionStorage.getItem("user_tkn") ?? localStorage.getItem("tkn");
+  const isUserLogged = useSelector((state) => state.auth.token);
 
-  const userName = sessionStorage
-    ? sessionStorage.getItem("user_firstName")
-    : null;
+  const userName = useSelector((state) => state.user.user.firstName);
 
   const handleSignOut = () => {
     localStorage.clear();

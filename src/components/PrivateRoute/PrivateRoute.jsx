@@ -5,8 +5,7 @@ import { useNavigate } from "react-router";
 const PrivateRoute = ({ children }) => {
   const navigate = useNavigate();
 
-  const authUser =
-    sessionStorage.getItem("user_tkn") ?? localStorage.getItem("tkn");
+  const authUser = useSelector((state) => state.auth.token);
 
   useEffect(() => {
     if (!authUser) {
