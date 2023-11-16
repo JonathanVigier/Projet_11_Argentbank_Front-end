@@ -13,9 +13,6 @@ export const fetchUserProfile = async (token) => {
     const response = await request.json();
 
     serverErrorHandler(response);
-    sessionStorage.setItem("user_firstName", response.body.firstName);
-    sessionStorage.setItem("user_lastName", response.body.lastName);
-
     return response.body;
   } catch (err) {
     console.error(err.status);

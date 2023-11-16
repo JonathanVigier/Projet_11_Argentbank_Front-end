@@ -13,7 +13,6 @@ export const authUser = async (userCredentials) => {
     const response = await request.json();
 
     serverErrorHandler(response);
-    sessionStorage.setItem("user_tkn", response.body.token);
     return response.body.token;
   } catch (error) {
     console.error(error);
