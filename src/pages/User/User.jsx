@@ -10,12 +10,11 @@ const User = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.user);
 
-  const userToken =
-    sessionStorage.getItem("user_tkn") ?? localStorage.getItem("tkn");
+  const { token } = useSelector((state) => state.auth);
 
   const fetchData = useCallback(() => {
-    dispatch(fetchUserData(userToken));
-  }, [dispatch, userToken]);
+    dispatch(fetchUserData(token));
+  }, [dispatch, token]);
 
   useEffect(() => {
     fetchData();
